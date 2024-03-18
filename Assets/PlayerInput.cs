@@ -9,6 +9,11 @@ public class PlayerInput : MonoBehaviour
 
     private Rigidbody2D rb;
 
+    public Transform ballSpawnPoint;
+    public GameObject ballPrefab;
+    public float ballSpeed = 10;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +30,12 @@ public class PlayerInput : MonoBehaviour
         bool isMoving = !Mathf.Approximately(moveX,0f);
         
         animator.SetBool(PAP.isMoving,isMoving);
+
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            var ball = Instantiate(ballPrefab, ballSpawnPoint.position, ballSpawnPoint.rotation);
+            ball.GetComponent<Rigidbody2D>().velocity = ballSpawnPoint.right * ballSpeed;
+        }
     }
 
     private void FixedUpdate()
